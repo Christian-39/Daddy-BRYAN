@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Will You Be My Valentine?</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: 'Poppins', sans-serif;
+            background: radial-gradient(circle at top, #ffd6e8, #fff1f7, #ffffff);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            color: #c9184a;
+        }
+
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 2.5rem 2rem;
+            border-radius: 24px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.12);
+            animation: pop 0.8s ease;
+            width: min(92%, 420px);
+            position: relative;
+            z-index: 2;
+        }
+
+        h1 {
+            font-size: clamp(1.6rem, 4vw, 2.3rem);
+            margin-bottom: 1.2rem;
+            animation: pulse 1.8s infinite;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        button {
+            border: none;
+            border-radius: 999px;
+            padding: 14px 28px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.25s ease;
+            min-width: 120px;
+        }
+
+        #yes {
+            background: linear-gradient(45deg, #ff4d6d, #ff85a1);
+            color: white;
+            box-shadow: 0 8px 20px rgba(255, 77, 109, 0.5);
+        }
+
+        #no {
+            background: linear-gradient(45deg, #ffc2d1, #ff8fab);
+            color: #7a0024;
+        }
+
+        #celebration {
+            display: none;
+        }
+
+        .slideshow {
+            position: relative;
+            overflow: hidden;
+            height: 410px;
+            /* increased from 280px */
+            border-radius: 16px;
+            margin-bottom: 1rem;
+        }
+
+
+        .slide {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            transform: scale(0.95);
+            transition: opacity 1s ease, transform 1s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+            text-align: center;
+            background: #fff0f6;
+        }
+
+        .slide.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .slide img {
+            width: 50%;
+            height: 100%;
+            max-height: 100%;
+            object-fit: cover;
+            border-radius: 16px;
+        }
+
+
+        /* 💖 Glowing text */
+        .love-text {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            font-weight: 600;
+            color: #c9184a;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 10px rgba(255, 77, 109, 0.7);
+            animation: glow 1.5s ease-in-out infinite alternate;
+            position: relative;
+            z-index: 2;
+        }
+
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 6px rgba(255, 77, 109, 0.4);
+            }
+
+            to {
+                text-shadow: 0 0 16px rgba(255, 77, 109, 1);
+            }
+        }
+
+        /* 💓 Heart pulse behind text */
+        .heart-bg {
+            position: absolute;
+            font-size: 6rem;
+            opacity: 0.15;
+            animation: heartBeat 1.8s infinite;
+            z-index: 1;
+        }
+
+        @keyframes heartBeat {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.15);
+            }
+        }
+
+        .slide p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            font-weight: 600;
+            color: #c9184a;
+            margin: 0;
+            z-index: 2;
+        }
+
+        .heart {
+            position: fixed;
+            bottom: -40px;
+            font-size: 1.5rem;
+            animation: rise linear infinite;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        @keyframes rise {
+            from {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+
+            to {
+                transform: translateY(-120vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .confetti {
+            position: fixed;
+            width: 8px;
+            height: 14px;
+            top: -20px;
+            animation: confetti-fall linear forwards;
+            z-index: 999;
+        }
+
+        @keyframes confetti-fall {
+            to {
+                transform: translateY(120vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="main" class="container">
+        <p>Hey <b>Daddy Bryan</b>, I have something to ask you 😌</p>
+        <h1>Will you be my Valentine? 💖</h1>
+
+        <div class="buttons">
+            <button id="yes">Yes</button>
+            <button id="no">No</button>
+        </div>
+    </div>
+
+    <div id="celebration" class="container">
+        <div class="slideshow">
+            <div class="slide active">
+                <img src="WhatsApp Image 2026-02-02 at 11.21.01 AM.jpeg" alt="Romantic">
+                <p>Yay 💕 <br> You just made my day, My Angel!</p>
+            </div>
+            <div class="slide">
+                <img src="WhatsApp Image 2026-02-02 at 11.21.02 AM (1).jpeg" alt="Romantic">
+                <p>family💕 <br></p>
+            </div>
+            <div class="slide">
+                <img src="WhatsApp Image 2026-02-02 at 11.21.02 AM.jpeg" alt="Romantic">
+                <p>Odogwu m 💕 <br></p>
+            </div>
+
+            <div class="slide">
+                <div class="heart-bg">💖</div>
+                <div class="love-text">
+                    My love❤️ <br>
+                    Being with you has taught me what real love feels like — calm, safe, and beautiful.
+                    You are my answered prayer, my peace in chaos, and my home in every season.
+                    With you, love feels easy. With you, life feels brighter.
+                    Thank you for loving me the way you do.
+                    Today and always, I choose you. 💕Forever your Valentine 💘
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <audio id="yesSound" src="Billie_Eilish_Khalid_-_Lovely_(mp3.pm).mp3" loop></audio>
+
+    <script>
+        const yesBtn = document.getElementById("yes");
+        const noBtn = document.getElementById("no");
+        const main = document.getElementById("main");
+        const celebration = document.getElementById("celebration");
+        const yesSound = document.getElementById("yesSound");
+        const slides = document.querySelectorAll(".slide");
+
+        let currentSlide = 0;
+        let slideTimer;
+
+        yesBtn.onclick = () => {
+            main.style.display = "none";
+            celebration.style.display = "block";
+            yesSound.play();
+            launchConfetti();
+            startSlideshow();
+        };
+
+        function startSlideshow() {
+            clearTimeout(slideTimer);
+            const durations = [5000, 5000, 5000, 25000];
+
+            function showNext() {
+                slides[currentSlide].classList.remove("active");
+                currentSlide = (currentSlide + 1) % slides.length;
+                slides[currentSlide].classList.add("active");
+
+                slideTimer = setTimeout(showNext, durations[currentSlide]);
+            }
+
+            slideTimer = setTimeout(showNext, durations[currentSlide]);
+        }
+
+        noBtn.onclick = () => {
+            const padding = 20;
+            const maxX = window.innerWidth - noBtn.offsetWidth - padding;
+            const maxY = window.innerHeight - noBtn.offsetHeight - padding;
+            noBtn.style.position = "fixed";
+            noBtn.style.left = Math.random() * maxX + "px";
+            noBtn.style.top = Math.random() * maxY + "px";
+        };
+
+        noBtn.ondblclick = () => {
+            alert("Nice try 😜 Love already won!");
+        };
+
+        function launchConfetti() {
+            for (let i = 0; i < 120; i++) {
+                const confetti = document.createElement("div");
+                confetti.className = "confetti";
+                confetti.style.left = Math.random() * 100 + "vw";
+                confetti.style.background = `hsl(${Math.random() * 360}, 80%, 60%)`;
+                confetti.style.animationDuration = 2 + Math.random() * 3 + "s";
+                document.body.appendChild(confetti);
+                setTimeout(() => confetti.remove(), 4000);
+            }
+        }
+
+        setInterval(() => {
+            const heart = document.createElement("div");
+            heart.className = "heart";
+            heart.innerText = ["💖", "💕", "❤️"][Math.floor(Math.random() * 3)];
+            heart.style.left = Math.random() * 100 + "vw";
+            heart.style.animationDuration = 4 + Math.random() * 3 + "s";
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 7000);
+        }, 500);
+    </script>
+
+</body>
+
+</html>
